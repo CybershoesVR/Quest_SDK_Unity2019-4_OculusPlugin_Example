@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Cybershoes;
 
 /// <summary>
@@ -45,7 +46,12 @@ public class CybershoesManager : MonoBehaviour
     /// <returns>characterMovement usable to update position of player camera or player controller</returns>
     private Vector3 GetCybershoesInput()
     {
-        Vector2 shoeMovement = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.Gamepad);
+        var gamepad = Gamepad.current;
+        if (gamepad == null)
+        {
+            return new Vector3(0,0,0);
+        }
+        Vector2 shoeMovement = new Vector2(gamepad.leftStick.x.ReadValue(), gamepad.leftStick.y.ReadValue());
         Vector2 adjustedShoeMovement = CybershoesInput.GetRotatedShoeVector(oculusCameraRig.centerEyeAnchor.rotation, shoeMovement);
         Vector3 characterMovement = new Vector3(adjustedShoeMovement.x * 0.05f, 0, adjustedShoeMovement.y * 0.05f);
         return characterMovement;

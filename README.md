@@ -65,7 +65,9 @@ Example implementation of constructing a three-dimensional vector by calling the
 GetRotatedShoeVector takes a 2D vector detailing the current state of the primary thumbstick of a gamepad and returns an adjusted two-dimensional vector of the x and y movement of the shoes.  
 The 2D x value is used for the 3D x value, while the 2D y value is used for the 3D z value.  
 This three-dimensional vector is then used to move the player in Update.  
-The example implementation uses OVRInput.Get to query the current state of the gamepad thumbstick.  
+The example implementation uses Unity's InputSystem to query the current state of the gamepad thumbstick.
+The InputSystem first had to be installed from Window -> Package Manager  
+and the active input handling in Edit -> Project Settings -> Player -> Other Settings to both.  
 You are, however, free to use your own solution of getting the thumbstick state and passing it to the GetRotatedShoeVector function.
 
 CybershoesManager.cs and CybershoesHeightScaler.cs are located on the empty Game Object called CybershoesManager,  
