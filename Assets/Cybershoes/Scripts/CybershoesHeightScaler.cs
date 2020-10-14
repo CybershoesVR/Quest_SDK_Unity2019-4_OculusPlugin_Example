@@ -23,9 +23,12 @@ namespace Cybershoes
             hmdTransform = hmd;
 
             standingHeight = targetCharacterHeight;
-            maxOffset = targetCharacterHeight - hmdTransform.localPosition.y;
-            duckMax = hmdTransform.localPosition.y - 0.05f;
-            duckMin = hmdTransform.localPosition.y - 0.40f;
+            if (hmdTransform != null)
+            {
+                maxOffset = targetCharacterHeight - hmdTransform.localPosition.y;
+                duckMax = hmdTransform.localPosition.y - 0.05f;
+                duckMin = hmdTransform.localPosition.y - 0.40f;
+            }
             initialized = true;
         }
 

@@ -14,7 +14,6 @@ permissions and limitations under the License.
 
 using System;
 using UnityEngine;
-//using Cybershoes;
 
 /// <summary>
 /// Controls the player's movement in virtual reality.
@@ -152,25 +151,13 @@ public class OVRPlayerController : MonoBehaviour
 	private bool ReadyToSnapTurn; // Set to true when a snap turn has occurred, code requires one frame of centered thumbstick to enable another snap turn.
 	private bool playerControllerEnabled = false;
 
-	//private HeightScaler cybershoesScaler; // added by Cybershoes
-
 	void Start()
 	{
 		// Add eye-depth as a camera offset from the player controller
 		var p = CameraRig.transform.localPosition;
 		p.z = OVRManager.profile.eyeDepth;
 		CameraRig.transform.localPosition = p;
-
-		//cybershoesScaler = gameObject.Find("CybershoesManager").GetComponent<HeightScaler>(); // added by Cybershoes
-		//Invoke("CybershoesStartHeightScaler", 1);
 	}
-
-	void CybershoesStartHeightScaler() // added by Cybershoes
-    {
-        //cybershoesScaler.InitHeightScaler(oculusCameraRig.centerEyeAnchor);
-        //hScaler.InitHeightScaler(oculusCameraRig.centerEyeAnchor, OVRManager.profile.eyeHeight); //takes user height from Oculus settings
-        //hScaler.InitHeightScaler(oculusCameraRig.transform.root, 1.75f); // optional reference data usage 
-    }
 
 	void Awake()
 	{
@@ -260,11 +247,7 @@ public class OVRPlayerController : MonoBehaviour
 			{
 				p.y = -(0.5f * Controller.height) + Controller.center.y;
 			}
-			//float cybershoesOffset = cybershoesScaler.CalculateOffset(); // added by Cybershoes
-
-            //p.y += cybershoesOffset;
-			//p.y += 5f;
-			//CameraRig.transform.localPosition = p;
+			CameraRig.transform.localPosition = p;
 		}
 		else if (InitialPose != null)
 		{

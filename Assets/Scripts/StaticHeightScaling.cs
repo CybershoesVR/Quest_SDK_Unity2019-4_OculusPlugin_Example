@@ -8,49 +8,17 @@ using Cybershoes;
 /// Example Implementation of player movement class using Cybershoes
 /// Use as reference for own implementation
 /// </summary>
-public class CybershoesManager : MonoBehaviour
+public class StaticHeightScaling : MonoBehaviour
 {
     private OVRPlayerController oculusPlayerController;
     private OVRCameraRig oculusCameraRig;
-    private CybershoesHeightScaler cybershoesScaler;
-
-    private float lastOffset;
     
     // Start is called before the first frame update
     void Start()
     {
         oculusPlayerController = GameObject.Find("OVRPlayerController").GetComponent<OVRPlayerController>();
-        oculusPlayerController.useProfileData = false; // neccessary to be able to move the camera rig in y-direction.
         oculusPlayerController.BackAndSideDampen = 1; // moving to the back or sides should have the same speed when using shoes.
         oculusCameraRig = GameObject.Find("OVRCameraRig").GetComponent<OVRCameraRig>();
-        oculusCameraRig.transform.localPosition = new Vector3(0, -1, 0); // counteract player controller being at y = 1.
-        cybershoesScaler = GetComponent<CybershoesHeightScaler>();
-
-        // showcasing height scaler functionality.
-		Invoke("StartCybershoesHeightScaler", 1);
-        Invoke("DeactivateCybershoesHeightScaler", 30); //30
-        Invoke("StartCybershoesHeightScaler", 40); //40
-    }
-
-    /// <summary>
-    /// Example implementation of starting height scaler functionality.
-    /// Call using eyetracking input device at the time of activating cybershoes input mode.
-    /// </summary>
-    private void StartCybershoesHeightScaler()
-    {
-        cybershoesScaler.InitHeightScaler(oculusCameraRig.centerEyeAnchor, 1.75f);
-        oculusPlayerController.useProfileData = false;
-    }
-
-    /// <summary>
-    /// Example implementation of ending height scaler functionality.
-    /// Call when deactivating cybershoes input mode, to revert player height to physical user height.
-    /// </summary>
-    private void DeactivateCybershoesHeightScaler()
-    {
-        cybershoesScaler.InitHeightScaler(null, 0);
-        oculusPlayerController.useProfileData = true;
-        
     }
 
     // Update is called once per frame
@@ -58,10 +26,35 @@ public class CybershoesManager : MonoBehaviour
     {
         oculusPlayerController.transform.Translate(GetCybershoesInput());
 
-        float currentOffset = cybershoesScaler.CalculateOffset();
-        oculusCameraRig.transform.localPosition -= Vector3.up * lastOffset; // subtract offset calculated in last frame.
-        oculusCameraRig.transform.localPosition += Vector3.up * currentOffset; // add offset calculated in current frame.
-        lastOffset = currentOffset;
+        // pressing the A button on the right Touch Controller activates the static camera offset.
+        // pressing the B button entirely deactivates any offset.
+        if (OVRInput.Get(OVRInput.Button.One))
+        {
+            ActivateSimulatedHeight();
+        }
+        else if (OVRInput.Get(OVRInput.Button.Two))
+        {
+            DeactivateSimulatedHeight();
+        }
+    }
+
+    /// <summary>
+    /// Example implementation of turning dynamic height scaling off, instead using a fixed camera y-offset.
+    /// Camera rig is positioned at a negative value to counteract player controller starting on y = 1 (e.g., positioned at -0.7 equals +0.3 to player height).
+    /// </summary>
+    private void ActivateSimulatedHeight() 
+    {
+        oculusPlayerController.useProfileData = false;
+        oculusCameraRig.transform.localPosition = new Vector3(0,-0.7f,0);
+    }
+
+    /// <summary>
+    /// Example implementation of reverting to no camera y-offset.
+    /// Camera rig is positioned at the physical height of the user.
+    /// </summary>
+    private void DeactivateSimulatedHeight() 
+    {
+        oculusPlayerController.useProfileData = true;
     }
 
     /// <summary>
