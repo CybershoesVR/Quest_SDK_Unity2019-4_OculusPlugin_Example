@@ -1,4 +1,5 @@
-# Cybershoes Quest SDK Developer Handbook for Oculus Utiliy Plugin 1.40
+# Cybershoes Quest SDK Developer Handbook for Unity
+*Tested in Unity 2019.4.9f1 using Oculus Utility Plugin 1.40*
 
 **Abstract:**  
 Cybershoes example project usable in Quest development.  
