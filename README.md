@@ -1,5 +1,12 @@
 # Cybershoes Quest SDK Developer Handbook for Oculus Utiliy Plugin 1.40
 
+**Abstract:**  
+Cybershoes example project usable in Quest development.  
+Shoe input appears as gamepad input.  
+The example illustrates how to get gamepad input and suggests solutions for a seated play mode.  
+
+Link to the hardware installation guide: bit.ly/302QyC0
+
 Cybershoes Functionality Scripts:
 * CybershoesInput.cs
 * CybershoesHeightScaler.cs
