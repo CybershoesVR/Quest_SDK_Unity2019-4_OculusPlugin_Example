@@ -1,10 +1,16 @@
 # Cybershoes Quest SDK Developer Handbook for Unity
-*Tested in Unity 2019.4.9f1 using Oculus Utility Plugin 1.40*
+*Thoroughly tested in Unity 2019.4.9f1 using Oculus Utility Plugin 1.40*  
+*Shortly tested in Unity 2020.1.6f1 using Oculus Utility Plugin 1.52*
 
 **Abstract:**  
 Cybershoes example project usable in Quest development.  
 Shoe input appears as gamepad input.  
 The example illustrates how to get gamepad input and suggests solutions for a seated play mode.  
+Testing gamepad functionality can either be done using the shoes, or if they're not available using a bluetooth gamepad (e.g., an Xbox One gamepad).
+
+*Please note that shoe movement is always relative to the rotation of the hmd.*  
+*Walking forward while looking to the side should result in strafing.*  
+*All directions of movement should have the same movement speed multiplier.*
 
 Link to the hardware installation guide: bit.ly/302QyC0
 
@@ -50,7 +56,7 @@ Make sure to deny upgrading APIs if Unity shows you the prompt.
 Open the Build Settings, set the platform to Android and select ASTC in the Texture Compression menu point. Make sure that the CybershoesSampleScene is listed under Scenes In Build.  
 Connect your Quest with activated developer mode to your PC and click Build And Run.  
 
-The scene provides two cubes, that have sizes of 1 meter and 2 meters respectively.  
+The scene provides three cubes, all with a size of 1 meters. Two of them are stacked to create a construct that is 2 meters tall.    
 Additionally a sphere that is grabbable using the Touch Controller's grip button.  
   
 ### CybershoesManager.cs
@@ -77,6 +83,15 @@ The example implementation uses Unity's InputSystem to query the current state o
 The InputSystem first had to be installed from Window -> Package Manager  
 and the active input handling in Edit -> Project Settings -> Player -> Other Settings to both.  
 You are, however, free to use your own solution of getting the thumbstick state and passing it to the GetRotatedShoeVector function.  
+
+*Note: In some versions of the Oculus Utilities Plugin the OVRPlayerController automatically adjusts the gamepad input to follow the rotation of the hmd.*  
+*If that is not the case, modify this function as detailed below to make player movement follow the rotation of the hmd.*    
+```c#
+Quaternion hmdRotation = oculusCameraRig.centerEyeAnchor.rotation;
+hmdRotation.x = 0;
+hmdRotation.z = 0;
+Vector3 characterMovement = hmdRotation * new Vector3(adjustedShoeMovement.x * Time.deltaTime * 0.5f, 0, adjustedShoeMovement.y * Time.deltaTime * 0.5f);
+```
 
 ### StaticHeightScaling.cs
 This script poses as an alternative to height scaling. Activate this script and deactivate the CybershoesManager script to see the effect.  

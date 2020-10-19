@@ -17,7 +17,7 @@ public class StaticHeightScaling : MonoBehaviour
     void Start()
     {
         oculusPlayerController = GameObject.Find("OVRPlayerController").GetComponent<OVRPlayerController>();
-        oculusPlayerController.BackAndSideDampen = 1; // moving to the back or sides should have the same speed when using shoes.
+        oculusPlayerController.BackAndSideDampen = 1; // Moving to the back or sides should have the same speed when using shoes.
         oculusCameraRig = GameObject.Find("OVRCameraRig").GetComponent<OVRCameraRig>();
     }
 
@@ -26,8 +26,8 @@ public class StaticHeightScaling : MonoBehaviour
     {
         oculusPlayerController.transform.Translate(GetCybershoesInput());
 
-        // pressing the A button on the right Touch Controller activates the static camera offset.
-        // pressing the B button entirely deactivates any offset.
+        // Pressing the A button on the right Touch Controller activates the static camera offset.
+        // Pressing the B button entirely deactivates any offset.
         if (OVRInput.Get(OVRInput.Button.One))
         {
             ActivateSimulatedHeight();
@@ -71,7 +71,7 @@ public class StaticHeightScaling : MonoBehaviour
         }
         Vector2 shoeMovement = new Vector2(gamepad.leftStick.x.ReadValue(), gamepad.leftStick.y.ReadValue());
         Vector2 adjustedShoeMovement = CybershoesInput.GetRotatedShoeVector(oculusCameraRig.centerEyeAnchor.rotation, shoeMovement);
-        Vector3 characterMovement = new Vector3(-adjustedShoeMovement.x * Time.deltaTime * 0.5f, 0, -adjustedShoeMovement.y * Time.deltaTime * 0.5f); // 0.005f Time.deltaTime
+        Vector3 characterMovement = new Vector3(-adjustedShoeMovement.x * Time.deltaTime * 0.5f, 0, -adjustedShoeMovement.y * Time.deltaTime * 0.5f);
         return characterMovement;
     }   
 }

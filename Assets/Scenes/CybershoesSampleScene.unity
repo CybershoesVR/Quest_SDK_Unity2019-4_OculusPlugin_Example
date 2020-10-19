@@ -388,7 +388,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1043929208}
-  - component: {fileID: 1043929207}
   - component: {fileID: 1043929206}
   - component: {fileID: 1043929209}
   - component: {fileID: 1043929210}
@@ -412,23 +411,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostHeightScaling: 0.05
---- !u!114 &1043929207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1043929205}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23457b82c8d0c7d48bd39de5b2b118b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oculusPlayerController: {fileID: 0}
-  oculusCameraRig: {fileID: 0}
-  cybershoesScaler: {fileID: 0}
-  lastOffset: 0
-  scaling: 1
 --- !u!4 &1043929208
 Transform:
   m_ObjectHideFlags: 0

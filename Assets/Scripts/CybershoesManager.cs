@@ -20,16 +20,16 @@ public class CybershoesManager : MonoBehaviour
     void Start()
     {
         oculusPlayerController = GameObject.Find("OVRPlayerController").GetComponent<OVRPlayerController>();
-        oculusPlayerController.useProfileData = false; // neccessary to be able to move the camera rig in y-direction.
-        oculusPlayerController.BackAndSideDampen = 1; // moving to the back or sides should have the same speed when using shoes.
+        oculusPlayerController.useProfileData = false; // Neccessary to be able to move the camera rig in y-direction.
+        oculusPlayerController.BackAndSideDampen = 1; // Moving to the back or sides should have the same speed when using shoes.
         oculusCameraRig = GameObject.Find("OVRCameraRig").GetComponent<OVRCameraRig>();
-        oculusCameraRig.transform.localPosition = new Vector3(0, -1, 0); // counteract player controller being at y = 1.
+        oculusCameraRig.transform.localPosition = new Vector3(0, -1, 0); // Counteract player controller being at y = 1.
         cybershoesScaler = GetComponent<CybershoesHeightScaler>();
 
-        // showcasing height scaler functionality.
+        // Showcasing height scaler functionality.
 		Invoke("StartCybershoesHeightScaler", 1);
-        Invoke("DeactivateCybershoesHeightScaler", 30); //30
-        Invoke("StartCybershoesHeightScaler", 40); //40
+        Invoke("DeactivateCybershoesHeightScaler", 30);
+        Invoke("StartCybershoesHeightScaler", 40);
     }
 
     /// <summary>
@@ -59,8 +59,8 @@ public class CybershoesManager : MonoBehaviour
         oculusPlayerController.transform.Translate(GetCybershoesInput());
 
         float currentOffset = cybershoesScaler.CalculateOffset();
-        oculusCameraRig.transform.localPosition -= Vector3.up * lastOffset; // subtract offset calculated in last frame.
-        oculusCameraRig.transform.localPosition += Vector3.up * currentOffset; // add offset calculated in current frame.
+        oculusCameraRig.transform.localPosition -= Vector3.up * lastOffset; // Subtract offset calculated in last frame.
+        oculusCameraRig.transform.localPosition += Vector3.up * currentOffset; // Add offset calculated in current frame.
         lastOffset = currentOffset;
     }
 
@@ -78,7 +78,7 @@ public class CybershoesManager : MonoBehaviour
         }
         Vector2 shoeMovement = new Vector2(gamepad.leftStick.x.ReadValue(), gamepad.leftStick.y.ReadValue());
         Vector2 adjustedShoeMovement = CybershoesInput.GetRotatedShoeVector(oculusCameraRig.centerEyeAnchor.rotation, shoeMovement);
-        Vector3 characterMovement = new Vector3(-adjustedShoeMovement.x * Time.deltaTime * 0.5f, 0, -adjustedShoeMovement.y * Time.deltaTime * 0.5f); // 0.005f Time.deltaTime
+        Vector3 characterMovement = new Vector3(-adjustedShoeMovement.x * Time.deltaTime * 0.5f, 0, -adjustedShoeMovement.y * Time.deltaTime * 0.5f);
         return characterMovement;
     }   
 }
