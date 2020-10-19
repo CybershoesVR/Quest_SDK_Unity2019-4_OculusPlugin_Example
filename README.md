@@ -100,11 +100,11 @@ This script poses as an alternative to height scaling. Activate this script and 
 Example implementation of using a fixed offset to simulate the height that a user would have when standing instead of being seated.  
 Some games might have a way of picking up items from the ground regardless where the chaperone might be positioned.  
 Using a fixed offset instead of height scaling may be more feasible and straightforward for such games.  
-In this example, height scaling is first turned off and useProfileData is set to false to be able to move the camera in the y-direction.  
+In this example, useProfileData is set to false to be able to move the camera in the y-direction.  
 The local position of the camera is then set to a negative value due to the player controller being positioned at y = 1.  
 The offset you want to achieve is calculated by adding 1 to the value you position the camera at (in this example, 1 + (-0.7) = 0.3 units offset).  
 We recommend using an offset-value of 0.3 or 0.4 units, which will put your player height at approximately 1.7 to 1.8 meters, assuming that the user is sitting on a Cyberchair.  
-If you use player modells, be aware that you have to scale them to the new height.  
+If you use player models, be aware that you have to scale them to the new height.  
 
 **Private function DeactivateSimulatedHeight():**  
 Example implementation of no longer using a fixed offset.  
