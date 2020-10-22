@@ -15,6 +15,7 @@ public class CybershoesManager : MonoBehaviour
     private CybershoesHeightScaler cybershoesScaler;
 
     private float lastOffset;
+    private bool scaling;
     
     // Start is called before the first frame update
     void Start()
@@ -27,18 +28,20 @@ public class CybershoesManager : MonoBehaviour
         cybershoesScaler = GetComponent<CybershoesHeightScaler>();
 
         // Showcasing height scaler functionality.
-		Invoke("StartCybershoesHeightScaler", 1);
+		Invoke("ActivateCybershoesHeightScaler", 1);
         Invoke("DeactivateCybershoesHeightScaler", 30);
-        Invoke("StartCybershoesHeightScaler", 40);
+        Invoke("ActivateCybershoesHeightScaler", 40);
     }
 
     /// <summary>
     /// Example implementation of starting height scaler functionality.
     /// Call using eyetracking input device at the time of activating cybershoes input mode.
+    /// Call when user is at a neutral seated position.
     /// </summary>
-    private void StartCybershoesHeightScaler()
+    private void ActivateCybershoesHeightScaler()
     {
         cybershoesScaler.InitHeightScaler(oculusCameraRig.centerEyeAnchor, 1.75f);
+        scaling = true;
         oculusPlayerController.useProfileData = false;
     }
 
@@ -48,9 +51,15 @@ public class CybershoesManager : MonoBehaviour
     /// </summary>
     private void DeactivateCybershoesHeightScaler()
     {
-        cybershoesScaler.InitHeightScaler(null, 0);
+        scaling = false;
         oculusPlayerController.useProfileData = true;
         
+    }
+
+    private void ReactivateCybershoesHeightScaler()
+    {
+        scaling = true;
+        oculusPlayerController.useProfileData = false;
     }
 
     // Update is called once per frame
@@ -58,10 +67,13 @@ public class CybershoesManager : MonoBehaviour
     {
         oculusPlayerController.transform.Translate(GetCybershoesInput());
 
-        float currentOffset = cybershoesScaler.CalculateOffset();
-        oculusCameraRig.transform.localPosition -= Vector3.up * lastOffset; // Subtract offset calculated in last frame.
-        oculusCameraRig.transform.localPosition += Vector3.up * currentOffset; // Add offset calculated in current frame.
-        lastOffset = currentOffset;
+        if (scaling)
+        {
+            float currentOffset = cybershoesScaler.CalculateOffset();
+            oculusCameraRig.transform.localPosition -= Vector3.up * lastOffset; // Subtract offset calculated in last frame.
+            oculusCameraRig.transform.localPosition += Vector3.up * currentOffset; // Add offset calculated in current frame.
+            lastOffset = currentOffset;
+        }
     }
 
     /// <summary>
