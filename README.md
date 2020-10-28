@@ -2,6 +2,8 @@
 *Thoroughly tested in Unity 2019.4.9f1 using Oculus Utility Plugin 1.40*  
 *Shortly tested in Unity 2020.1.6f1 using Oculus Utility Plugin 1.52*
 
+If your game is using the new Unity XRRig-system check out the example project at: https://github.com/CybershoesVR/Quest_SDK_Unity_Example_XR  
+
 **Abstract:**  
 Cybershoes example project usable in Quest development.  
 Shoe input appears as gamepad input.  
